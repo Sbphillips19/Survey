@@ -21,7 +21,7 @@ const app = express();
 //    closes response and immediately sends back
 // arrow function called anytime that the route is called
 app.get('/', (req, res) => {
-  res.send({ hi: 'there' });
+  res.send({ bye: 'buddy' });
 });
 
 // constant that should not be changed lightly
