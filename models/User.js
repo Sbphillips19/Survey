@@ -8,7 +8,8 @@ const { Schema } = mongoose;
 
 // can freely add or subtract properties as needed
 const userSchema = new Schema({
-  googleId: String
+  googleId: String,
+  credits: { type: Number, default: 0 }
 });
 
 // create a new collection called users

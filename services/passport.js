@@ -26,22 +26,33 @@ passport.use(
     },
 
     // opportunity to take user information and save to database
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id }).then(existingUser => {
-        if (existingUser) {
-          // we already have a record with given profile ID
+    // (accessToken, refreshToken, profile, done) => {
+    //   User.findOne({ googleId: profile.id }).then(existingUser => {
+    //     if (existingUser) {
+    //       // we already have a record with given profile ID
+    //
+    //       // for done provide 2 things
+    //       // 1- error object- null because no error
+    //       // 2- user record
+    //       done(null, existingUser);
+    //     } else {
+    //       // we don't have a user record with this ID, make a new record
+    //       new User({ googleId: profile.id })
+    //         .save()
+    //         .then(user => done(null, user));
+    //     }
+    //   });
+    // }
 
-          // for done provide 2 things
-          // 1- error object- null because no error
-          // 2- user record
-          done(null, existingUser);
-        } else {
-          // we don't have a user record with this ID, make a new record
-          new User({ googleId: profile.id })
-            .save()
-            .then(user => done(null, user));
-        }
-      });
+    // refractor to async await
+
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.id });
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+      const user = await new User({ googleId: profile.id }).save();
+      done(null, user);
     }
   )
 );

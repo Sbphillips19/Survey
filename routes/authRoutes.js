@@ -5,17 +5,26 @@ module.exports = app => {
     '/auth/google',
     // scope tells us what we want to look up
     // google has a list of scopes that are written up already for Oauth process
-    passport.authenticate('google', { scope: ['profile', 'email'] })
+    passport.authenticate('google', {
+      scope: ['profile', 'email'],
+      prompt: 'select_account'
+    })
   );
 
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     // takes cookie and it kills the ID that is in there
     // says you are not that user anymore
     req.logout();
     // proves no longer signed in
-    res.send(req.user);
+    res.redirect('/');
   });
 
   app.get('/api/current_user', (req, res) => {

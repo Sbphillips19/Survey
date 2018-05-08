@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User');
 require('./services/passport');
@@ -17,6 +18,8 @@ mongoose.connect(keys.mongoURI);
 
 // generates new express app
 const app = express();
+
+app.use(bodyParser.json());
 
 // maxAge- how long cookie can exist in browser before expired
 // passed in milliseconds
@@ -34,6 +37,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
+
+if (process.env.NODE_ENV === 'production') {
+  // express will serve up production assets
+  // like main.js or main.css file
+  app.use(express.static('client/build'));
+
+  // express will serve up index html file
+  // if it doesn't recognize the route
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'html'));
+  });
+}
 
 // not used anymore but keeping for notes
 // create route handler and associate with given route
