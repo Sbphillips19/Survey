@@ -1,4 +1,4 @@
-App to create surveys and send to customers.  Built using node, react, stripe, sendgrid and more
+App to create surveys and send to customers.  Built using node, react, stripe, mongo, sendgrid and more
 
 **App deployed on Heroku located here:**
 
