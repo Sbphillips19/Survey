@@ -1,4 +1,4 @@
-App to create surveys and send to customers.  Built using node, react, stripe, mongo, sendgrid and more.  Uses google oauth flow.
+App to create surveys and send to customers.  Built using node, react, stripe, mongo, sendgrid and more.  Uses google oauth flow.  Surveys will be sent to recipients and then their responses will be recorded.
 
 **App deployed on Heroku located here:**
 
